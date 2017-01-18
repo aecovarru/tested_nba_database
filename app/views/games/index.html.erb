@@ -1,0 +1,24 @@
+<div>
+  <h1>Games</h1>
+</div>
+
+<div>
+  <table>
+    <thead>
+      <tr>
+        <% @headers.each do |header| %>
+          <th><%= header %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @games.each do |game| %>
+        <tr>
+          <td><%= game.game_date %></td>
+          <td><%= game.url %></td>
+          <td><%= game_link(game) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

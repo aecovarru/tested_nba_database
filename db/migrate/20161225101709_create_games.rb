@@ -5,7 +5,6 @@ class CreateGames < ActiveRecord::Migration[5.0]
       t.belongs_to :game_date
       t.references :away_team, references: :team
       t.references :home_team, references: :team
-      t.string :url
     end
   end
 end

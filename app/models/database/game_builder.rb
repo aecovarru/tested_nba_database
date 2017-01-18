@@ -1,20 +1,22 @@
 module Database
   class GameBuilder
-    def basketball_reference(endpoint)
-      url = "http://www.basketball-reference.com/#{endpoint}"
-      return Nokogiri::HTML(open(url))
+    include BasketballReference
+    def build(year)
+      @season = Season.find_by(year: year)
+      months.each do |month|
+        doc = basketball_reference("/leagues/NBA_#{year}_games-#{month}.html").css(".left")
+        doc.each_slice(4) do |row|
+          create_game(row) unless header_row?(row)
+        end
+      end
+    end
+
+    def months
+      [10, 11, 12, 1, 2, 3, 4].map {|num| Date::MONTHNAMES[num].downcase}
     end
 
     def header_row?(row)
       row[0].text == "Date"
-    end
-
-    def build(year)
-      @season = Season.find_by(year: year)
-      doc = basketball_reference("/leagues/NBA_#{year}_games.html")
-      doc.css(".left").each_slice(4) do |row|
-        create_game(row) unless header_row?(row)
-      end
     end
 
     def create_game(row)
@@ -22,7 +24,7 @@ module Database
       date = parse_date(data_str)
       away_team, home_team = parse_teams(data_str)
       game_date = GameDate.find_or_create_by(date: date, season: @season)
-      game = Game.find_or_create_by(game_date: game_date, away_team: away_team, home_team: home_team)
+      game = Game.find_or_create_by(season: @season, game_date: game_date, away_team: away_team, home_team: home_team)
     end
 
     def parse_date(data_str)

@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 20161225101903) do
     t.integer "game_date_id"
     t.integer "away_team_id"
     t.integer "home_team_id"
-    t.string  "url"
     t.index ["away_team_id"], name: "index_games_on_away_team_id"
     t.index ["game_date_id"], name: "index_games_on_game_date_id"
     t.index ["home_team_id"], name: "index_games_on_home_team_id"
@@ -43,7 +42,12 @@ ActiveRecord::Schema.define(version: 20161225101903) do
     t.string  "name"
     t.string  "abbr"
     t.string  "idstr"
+    t.string  "position"
+    t.boolean "starter"
+    t.index ["abbr"], name: "index_players_on_abbr"
+    t.index ["idstr"], name: "index_players_on_idstr"
     t.index ["intervalable_type", "intervalable_id"], name: "index_players_on_intervalable_type_and_intervalable_id"
+    t.index ["name"], name: "index_players_on_name"
     t.index ["team_id"], name: "index_players_on_team_id"
   end
 
@@ -54,7 +58,7 @@ ActiveRecord::Schema.define(version: 20161225101903) do
   create_table "stats", force: :cascade do |t|
     t.string  "statable_type"
     t.integer "statable_id"
-    t.float   "mp",            default: 0.0
+    t.integer "sp",            default: 0
     t.integer "fgm",           default: 0
     t.integer "fga",           default: 0
     t.integer "thpa",          default: 0
@@ -69,6 +73,9 @@ ActiveRecord::Schema.define(version: 20161225101903) do
     t.integer "tov",           default: 0
     t.integer "pf",            default: 0
     t.integer "pts",           default: 0
+    t.float   "pace",          default: 0.0
+    t.float   "ortg",          default: 0.0
+    t.float   "drtg",          default: 0.0
     t.index ["statable_type", "statable_id"], name: "index_stats_on_statable_type_and_statable_id"
   end
 

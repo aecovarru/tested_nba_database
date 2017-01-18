@@ -2,7 +2,7 @@ class CreateStats < ActiveRecord::Migration[5.0]
   def change
     create_table :stats do |t|
       t.references :statable, polymorphic: true, index: true
-      t.float :mp, default: 0
+      t.integer :sp, default: 0
       t.integer :fgm, default: 0
       t.integer :fga, default: 0
       t.integer :thpa, default: 0
@@ -17,6 +17,9 @@ class CreateStats < ActiveRecord::Migration[5.0]
       t.integer :tov, default: 0
       t.integer :pf, default: 0
       t.integer :pts, default: 0
+      t.float :pace, default: 0
+      t.float :ortg, default: 0
+      t.float :drtg, default: 0
     end
   end
 end

@@ -4,5 +4,8 @@ module Database
     it "should create game" do
       expect(2016).to eq(2016)
     end
+
+    context "stats" do
+    end
   end
 end

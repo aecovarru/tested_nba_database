@@ -7,9 +7,16 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 module Database
-  (2016..2017).each do |year|
-    SeasonBuilder.new.build(year)
-    TeamBuilder.new.build(year)
-    GameBuilder.new.build(year)
+  # (2000..2015).reverse_each do |year|
+    # SeasonBuilder.new.build(year)
+    # TeamBuilder.new.build(year)
+    # GameBuilder.new.build(year)
+    # PlayerBuilder.new.build(year)
+    # GameStatBuilder.new.build(year)
+    # QuarterStatBuilder.new.build(year)
+  # end
+  season = Season.first
+  season.games.each do |game|
+    game.fix_player_accuracy
   end
 end
