@@ -29,11 +29,8 @@ class Game < ApplicationRecord
 
   def player_accuracy
     def fix_player_stat(idstr, quarter_stats)
-      pp idstr
-      pp quarter_stats[idstr]
       player_stat = self.players_0.find_by_idstr(idstr).stat
       player_stat.update(quarter_stats[idstr])
-      pp player_stat.stat_hash
     end
     game_stats = full_game_stats
     quarter_stats = summed_quarter_stats

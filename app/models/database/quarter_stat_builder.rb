@@ -3,21 +3,23 @@ module Database
     include BasketballReference
     def build(year)
       season = Season.find_by_year(year)
-      season.games.each { |game| build_game(game) }
+      games = season.games
+      games.each { |game| build_stats(game) }
+
     end
 
-    def build_game(game)
+    def build_stats(game)
       puts "#{game.url} #{game.id}"
       @options = {game: game, players: game.players_0, player_stats: game.initialize_player_stats,
         quarter: 0, on_court: game.initial_on_court, possessions: 0}
       doc = basketball_reference("/boxscores/pbp/#{game.url}.html")
       if doc
         rows = doc.css("#pbp td").to_a
-        build_stats(rows)
+        build_stat(rows)
       end
     end
 
-    def build_stats(rows)
+    def build_stat(rows)
       until rows.empty?
         row = rows.shift(size(rows))
         time = parse_time(row[0])

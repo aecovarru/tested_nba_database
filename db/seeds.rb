@@ -8,15 +8,14 @@
 
 module Database
   # (2000..2015).reverse_each do |year|
-    # SeasonBuilder.new.build(year)
-    # TeamBuilder.new.build(year)
-    # GameBuilder.new.build(year)
-    # PlayerBuilder.new.build(year)
-    # GameStatBuilder.new.build(year)
-    # QuarterStatBuilder.new.build(year)
+    year = 2016
+    SeasonBuilder.new.build(year)
+    TeamBuilder.new.build(year)
+    GameBuilder.new.build(year)
+    PlayerBuilder.new.build(year)
+    GameStatBuilder.new.build(year)
+    QuarterStatBuilder.new.build(year)
   # end
   season = Season.first
-  season.games.each do |game|
-    game.fix_player_accuracy
-  end
+  season.games.each { |game| game.player_accuracy }
 end

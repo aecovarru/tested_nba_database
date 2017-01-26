@@ -9,9 +9,7 @@ module Database
     def build(year)
       @season = Season.find_by_year(year)
       games = @season.games
-      games.each do |game|
-        build_game(game)
-      end
+      games.each { |game| build_game(game) }
     end
 
     def build_game(game)
